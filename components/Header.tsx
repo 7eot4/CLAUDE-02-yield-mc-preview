@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { NAV_LINKS, SITE_NAME } from '@/lib/constants';
-import { getServerIp } from '@/lib/env';
+import { getServerIp, withBasePath } from '@/lib/env';
 import { CopyIpButton } from './CopyIpButton';
 
 export function Header({ discordInviteUrl }: { discordInviteUrl: string }) {
@@ -11,7 +11,7 @@ export function Header({ discordInviteUrl }: { discordInviteUrl: string }) {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-yield-bg/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         <Link href="/" className="flex items-center gap-2 shrink-0" aria-label={`${SITE_NAME} home`}>
-          <Image src="/icon.svg" alt="" width={32} height={32} priority />
+          <Image src={withBasePath('/icon.svg')} alt="" width={32} height={32} priority />
           <span className="font-display text-lg font-bold tracking-wide">{SITE_NAME}</span>
         </Link>
 
@@ -34,7 +34,7 @@ export function Header({ discordInviteUrl }: { discordInviteUrl: string }) {
           <div className="hidden sm:block">
             <CopyIpButton serverIp={serverIp} />
           </div>
-          <a href={discordInviteUrl || '/discord'} className="btn-primary">
+          <a href={discordInviteUrl || withBasePath('/discord')} className="btn-primary">
             Join Discord
           </a>
         </div>

@@ -24,3 +24,18 @@ export function getServerIp(): string {
 export function getDiscordInviteUrl(): string {
   return process.env.DISCORD_INVITE_URL || '';
 }
+
+/**
+ * Mirrors next.config.mjs's own GITHUB_PAGES/repoName logic exactly - needed
+ * here too because `next/image` only auto-prefixes `src` with `basePath`
+ * when going through its optimization loader, and static export sets
+ * `images.unoptimized: true` (no server available to run that loader),
+ * which silently disables the auto-prefixing. Any hardcoded public/ asset
+ * path passed to next/image must be run through this helper, or it 404s on
+ * GitHub Pages while looking correct in local dev/Docker (where basePath is
+ * empty, so the missing prefix goes unnoticed).
+ */
+export function withBasePath(path: string): string {
+  const isGithubPagesExport = process.env.GITHUB_PAGES === 'true';
+  return isGithubPagesExport ? `/CLAUDE-02-yield-mc-preview${path}` : path;
+}
