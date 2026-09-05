@@ -33,6 +33,12 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: 'true'
+          # metadataBase (app/layout.tsx) resolves relative OpenGraph/Twitter
+          # image URLs against this - without it, Next falls back to its
+          # localhost:3000 dev default, which is what shipped to production
+          # in og:image tags until this was caught by checking the live
+          # page's actual meta tags, not just that the build succeeded.
+          NEXT_PUBLIC_SITE_URL: 'https://7eot4.github.io/CLAUDE-02-yield-mc-preview'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
