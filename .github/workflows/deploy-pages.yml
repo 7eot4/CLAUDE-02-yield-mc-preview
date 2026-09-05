@@ -38,7 +38,12 @@ jobs:
           # localhost:3000 dev default, which is what shipped to production
           # in og:image tags until this was caught by checking the live
           # page's actual meta tags, not just that the build succeeded.
-          NEXT_PUBLIC_SITE_URL: 'https://7eot4.github.io/CLAUDE-02-yield-mc-preview'
+          # Deliberately the bare origin, NOT including /CLAUDE-02-yield-mc-preview -
+          # withBasePath() (lib/env.ts) already adds that repo-name prefix to
+          # the image path itself, so including it here too doubled the
+          # prefix (caught the same way, by re-checking live output after
+          # the first fix attempt).
+          NEXT_PUBLIC_SITE_URL: 'https://7eot4.github.io'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
